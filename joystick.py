@@ -10,8 +10,8 @@ sit = True
 hizBoleni = 1
 tolerans = 30
 
-maxdeger = 1940
-mindeger = 1060
+maxdeger = 2000
+mindeger = 1000
 
 xAxisVal = yAxisVal = x2AxisVal = y2AxisVal = 0
 condition1 = condition2 = condition3 = condition4 = 0
@@ -75,4 +75,4 @@ while sit:
     
     print(joystickMessage)
     # table.putString("value", joystickMessage)
-    time.sleep(0.05)
+    time.sleep(0.01)

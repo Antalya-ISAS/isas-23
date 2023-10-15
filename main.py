@@ -26,13 +26,14 @@ baseValue = "15001500150015000000"
 
 time.sleep(3)
 
-def write(serial_com, message):
-    serial_com.write(bytes(message, "utf-8"))
-    time.sleep(0.05)
-
 def read(serial_com):
     data = serial_com.readline().decode(encoding="ascii")
     return data
+
+def write(serial_com, message):
+    serial_com.write(bytes(message, "utf-8"))
+    print(read(serial_com))
+    time.sleep(0.05)
 
 def fix_motor_direction(value):
     return 3000 - value
@@ -62,7 +63,7 @@ while True:
     condition3 = int(joystickMessage[18])
     condition4 = int(joystickMessage[19])
 
-    #front-right-up // rear-right-up
+    # front-right-up // rear-right-up
     frriup_val = frleup_val = reriup_val = releup_val = 3000 - xAxisVal
 
     frri_val = 1500 + (x2AxisVal - 1500) - (y2AxisVal - 1500) - (yAxisVal - 1500)
@@ -76,8 +77,10 @@ while True:
     reri_val = fix_motor_direction(reri_val)
     rele_val = fix_motor_direction(rele_val)
     frriup_val = fix_motor_direction(frriup_val)
+    frleup_val = 3000 - fix_motor_direction(frleup_val)
     #frleup_val = fix_motor_direction(frleup_val)
     reriup_val = fix_motor_direction(reriup_val)
+    releup_val = 3000 - fix_motor_direction(releup_val)
     #releup_val = fix_motor_direction(releup_val)
 
     frri_val = limit_value(frri_val, minValue, maxValue)
@@ -102,4 +105,3 @@ while True:
 
     write(arduino, serialMessage)
     print(serialMessage)
-    print(read(arduino))
