@@ -76,7 +76,7 @@ while running:
 
     # Reverse
     xAxisVal = int(xAxis) + 1000
-    yAxisVal = int(xAxis) + 1000 # yAxisVal = 3000 - (int(yAxis) + 1000)
+    yAxisVal = int(yAxis) + 1000 # yAxisVal = 3000 - (int(yAxis) + 1000)
     x2AxisVal = int(x2Axis) + 1000 # x2AxisVal = 3000 - (int(x2Axis) + 1000)
     y2AxisVal = int(y2Axis) + 1000
 
@@ -153,7 +153,7 @@ while running:
     screen.blit(logo, (560, 0))
     pygame.display.flip()
     print(joystickMessage)
-    # table.putString("value", joystickMessage)
-    time.sleep(0.02)
+    table.putString("value", joystickMessage)
+    
 
    

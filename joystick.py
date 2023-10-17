@@ -74,5 +74,4 @@ while sit:
     )
     
     print(joystickMessage)
-    # table.putString("value", joystickMessage)
-    time.sleep(0.01)
+    table.putString("value", joystickMessage)

@@ -1,11 +1,10 @@
 import serial
 import time
 from networktables import NetworkTables
-import board
 
-i2c = board.I2C()  # uses board.SCL and board.SDA
+# i2c = board.I2C()  # uses board.SCL and board.SDA
 
-NetworkTables.initialize("10.76.72.31")
+NetworkTables.initialize("10.76.72.13")
 table = NetworkTables.getTable("joystick")
 
 xAxisVal = yAxisVal = x2AxisVal = y2AxisVal = 0
@@ -18,7 +17,7 @@ serialMessage = "" # Data that we send to Arduino
 
 mode = 0  # There are three mods: Teleop (0), Autonomus (1) and Security (2)
 
-arduino = serial.Serial(port="/dev/ttyUSB0", baudrate=115200, timeout=0.1)
+arduino = serial.Serial(port="/dev/ttyUSB0", baudrate=115200, timeout=0.01)
 
 maxValue = 1940
 minValue = 1060
@@ -26,14 +25,11 @@ baseValue = "15001500150015000000"
 
 time.sleep(3)
 
-def read(serial_com):
-    data = serial_com.readline().decode(encoding="ascii")
-    return data
-
-def write(serial_com, message):
-    serial_com.write(bytes(message, "utf-8"))
-    print(read(serial_com))
-    time.sleep(0.05)
+def write_read(com, message):
+    com.write(bytes(message,  'utf-8'))
+    time.sleep(0.01)
+    data = arduino.readline()
+    return  data
 
 def fix_motor_direction(value):
     return 3000 - value
@@ -42,7 +38,8 @@ def limit_value(value, min_val, max_val):
     return min(max(value, min_val), max_val)
 
 for x in range(20):
-    write(arduino, baseValue)
+    write_read(arduino, baseValue)
+    time.sleep(0.04)
     print("Calibration")
 
 while True:
@@ -103,5 +100,5 @@ while True:
         + str(releup_val)
     )
 
-    write(arduino, serialMessage)
+    print(write_read(arduino, serialMessage))
     print(serialMessage)
